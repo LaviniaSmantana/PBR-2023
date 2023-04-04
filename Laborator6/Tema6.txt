@@ -1,0 +1,25 @@
+echilibrat(nil).
+echilibrat(t(_, L, R)) :-
+    inaltime(L, HL),
+    inaltime(R, HR),
+    abs(HL - HR) =< 1,
+    echilibrat(L),
+    echilibrat(R).
+
+inaltime(nil, 0).
+inaltime(t(_, L, R), H) :-
+   	inaltime(L, HL),
+    inaltime(R, HR),
+    H is max(HL, HR) + 1.
+
+cauta(X, t(X, _, _), [X]) :- !.
+cauta(X, t(Y, Left, _), [Y|Path]) :- X < Y, cauta(X, Left, Path), !.
+cauta(X, t(Y, _, Right), [Y|Path]) :- X > Y, cauta(X, Right, Path), !.
+
+afiseaza([]).
+afiseaza([X]) :- write(X), nl.
+afiseaza([H|T]) :- write(H), write(' -> '), afiseaza(T).
+
+% echilibrat(t(1, t(2, t(3, nil, nil), t(4, nil, nil)), t(5, t(6, nil, nil), t(7, nil, nil)))).
+
+% cauta(6, t(5, t(3, t(1, nil, nil), t(4, nil, nil)), t(7, t(6, nil, nil), t(8, nil, nil))), Path).
